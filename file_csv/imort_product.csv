@@ -1,0 +1,3 @@
+﻿name,price_in,price_out,mfg,exp,barcode,quantity,quantity_alert,photo,description,category_id,brand_id,unit_id,supplier_id
+abc,5000,123456,,,1234567891111,1000,10,,abc,1,1,1,1
+cde,5000,123456,1-9-2021,30-9-2021,1234567891111,1000,10,,cde,1,1,1,1

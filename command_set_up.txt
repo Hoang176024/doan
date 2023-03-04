@@ -1,0 +1,32 @@
+//Laravel spatie for Role and Permission: https://spatie.be/docs/laravel-permission/v5/installation-laravel
+composer require spatie/laravel-permission
+'providers' => [
+    // ...
+    Spatie\Permission\PermissionServiceProvider::class,
+];
+php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"
+php artisan optimize:clear hoặc php artisan config:clear
+php artisan migrate
+
+
+//Package Maatwebsite for import data via CSV
+composer require maatwebsite/excel
+\Maatwebsite\Excel\ExcelServiceProvider::class (in config.app provider)
+'Excel' => \Maatwebsite\Excel\Facades\Excel::class (in config.app aliases
+php artisan vendor:publish --provider="Maatwebsite\Excel\ExcelServiceProvider"
+
+//Package Dompdf for print pdf
+composer require barryvdh/laravel-dompdf
+Barryvdh\DomPDF\ServiceProvider::class,
+'PDF' => Barryvdh\DomPDF\Facade::class,
+
+
+//Hành Chính Việt Nam: https://viblo.asia/p/database-don-vi-hanh-chinh-viet-nam-trong-laravel-WAyK89MnZxX?fbclid=IwAR0meQWiAUrc1_r-M6ha27XxxiTAIe2FnKJEus6TP_Kze68GqhXIf_RLx5w
+composer require hoangphi/vietnam-maps
+php artisan vietnam-map:install
+php artisan vietnam-map:download  / lệnh import dữ liệu vào trong DB
+
+//Lấy dữ liệu trong DB
+php artisan migrate:refresh
+php artisan vietnam-map:download
+php artisan db:seed

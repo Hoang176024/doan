@@ -1,0 +1,9 @@
+*
+!.gitignore
+!icheck-bootstrap/
+!toastr/
+!fontawesome-free/
+!datatables/
+!date-picker/
+!select2/
+!sweetalert2/

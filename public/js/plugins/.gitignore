@@ -1,0 +1,14 @@
+*
+!bootstrap/
+!chart/
+!icheck-bootstrap/
+!jquery/
+!toastr/
+!bs-custom-file-input/
+!datatables/
+!jszip/
+!date-picker/
+!pdfmake/
+!select2/
+!sweetalert2
+!.gitignore
