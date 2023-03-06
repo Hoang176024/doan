@@ -34,28 +34,20 @@
                 <!-- Add icons to the links using the .nav-icon class
                      with font-awesome or any other icon font library -->
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{route('admin.dashboard')}}" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             Dashboard
-                            <i class="fas fa-angle-left right"></i>
+                            <i class="fas fa-angle"></i>
                         </p>
                     </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{route('admin.dashboard')}}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Dashboard</p>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('admin.pos.index') }}" class="nav-link">
                         <p><i class="fas fa-cart-plus"></i> Take order </p>
                     </a>
                 </li>
-                @role('Admin')
+                @role('Manager|Owner')
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="fab fa-product-hunt"></i>
@@ -124,26 +116,18 @@
                         </p>
                     </a>
                 </li>
-                @role('Admin')
+                @role('Owner|Manager')
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{route('admin.purchases.index')}}" class="nav-link">
                         <i class="fas fa-store-alt"></i>
                         <p>
-                            Purchase
-                            <i class="fas fa-angle-left right"></i>
+                            Import
+                            <i class="fas fa-angle"></i>
                         </p>
                     </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{route('admin.purchases.index')}}" class="nav-link">
-                                <i class="fas fa-arrow-right" style="margin-left: 10px"></i>
-                                <p>Purchase Invoice</p>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
                 @endrole
-                @role('Admin')
+                @role('Owner|Manager')
                 <li class="nav-item">
                     <a href="{{route('admin.users.index')}}" class="nav-link">
                         <i class="fas fa-users-cog"></i>
@@ -152,7 +136,16 @@
                 </li>
                 @endrole
 
-                @role('Admin')
+                @role('Owner|Manager')
+                <li class="nav-item">
+                    <a href="{{route('admin.statistic.index')}}" class="nav-link">
+                    <i class="fas fa-chart-line"></i>
+                        <p> Statistic </p>
+                    </a>
+                </li>
+                @endrole
+
+                @role('Owner|Manager')
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="fas fa-cogs"></i>

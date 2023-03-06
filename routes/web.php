@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\QuotationController;
 use App\Http\Controllers\Admin\SaleInvoiceController;
 use App\Http\Controllers\Dashboard\PosController;
 use App\Http\Controllers\Admin\PosInvoiceController;
+use App\Http\Controllers\Admin\StatisticController;
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login-process', [LoginController::class, 'process'])->name('login.process');
@@ -38,11 +39,11 @@ Route::get('/reset-password/{resetCode}', [ForgetPasswordController::class, 'res
 Route::post('/reset-password/{resetCode}', [ForgetPasswordController::class, 'resetPasswordProcess'])
     ->name('resetPassword.process');
 
-Route::prefix('/')->name('admin.')->middleware(['auth', 'role:Admin|Manager|Seller'])->group(function () {
+Route::prefix('/')->name('admin.')->middleware(['auth', 'role:Owner|Manager|Seller'])->group(function () {
     Route::get('/', [DashboardController::class, 'dashboard'])->name('dashboard');
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
-    Route::prefix('suppliers')->name('suppliers.')->group(function () {
+    Route::prefix('suppliers')->name('suppliers.')->middleware('role:Owner|Manager')->group(function () {
         Route::get('', [SupplierController::class, 'index'])->name('index');
         Route::get('/anyData', [SupplierController::class, 'anyData'])->name('data');
         Route::get('/create', [SupplierController::class, 'create'])->name('create');
@@ -54,21 +55,21 @@ Route::prefix('/')->name('admin.')->middleware(['auth', 'role:Admin|Manager|Sell
         Route::post('/import',[SupplierController::class, 'import'])->name('import');
     });
 
-    Route::prefix('pos')->name('pos.')->group(function () {
+    Route::prefix('pos')->name('pos.')->middleware('role:Owner|Manager|Seller')->group(function () {
         Route::get('', [PosController::class, 'index'])->name('index');
         Route::get('/live-search', [PosController::class, 'search'])->name('search');
         Route::post('/choose-product', [PosController::class, 'chooseProduct'])->name('chooseProduct');
         Route::post('/create-new-pos-invoice', [PosInvoiceController::class, 'create'])->name('createNewInvoices');
     });
 
-    Route::prefix('posInvoices')->name('posInvoices.')->middleware(['role:Admin|Seller'])->group(function () {
+    Route::prefix('posInvoices')->name('posInvoices.')->middleware(['role:Owner|Seller|Manager'])->group(function () {
         Route::get('', [PosInvoiceController::class, 'index'])->name('index');
         Route::get('/list', [PosInvoiceController::class, 'getList'])->name('list');
         Route::get('/see-detail', [PosInvoiceController::class, 'detail'])->name('detail');
         Route::get('/print-pdf/{posInvoiceId}', [PosInvoiceController::class, 'printPDF'])->name('printPDF');
     });
 
-    Route::prefix('customers')->name('customers.')-> group(function(){
+    Route::prefix('customers')->name('customers.')->middleware('role:Owner|Manager|Seller')-> group(function(){
         Route::get('',[CustomerController::class, 'index'])->name('index');
         Route::get('/anyData',[CustomerController::class, 'anyData'])->name('data');
         Route::get('/create',[CustomerController::class, 'create'])->name('create');
@@ -81,7 +82,7 @@ Route::prefix('/')->name('admin.')->middleware(['auth', 'role:Admin|Manager|Sell
 
     });
 
-    Route::prefix('users')->name('users.')->middleware('role:Admin')->group(function(){
+    Route::prefix('users')->name('users.')->middleware('role:Owner')->group(function(){
         Route::get('/', [UserController::class, 'index'])->name('index');
         Route::get('/get-list', [UserController::class, 'getList'])->name('getList');
         Route::get('/assign-role/{userId}', [UserController::class, 'assignRole'])->name('assignRole');
@@ -90,7 +91,7 @@ Route::prefix('/')->name('admin.')->middleware(['auth', 'role:Admin|Manager|Sell
         Route::delete('/delete-user', [UserController::class, 'delete'])->name('delete');
     });
 
-    Route::prefix('products')->name('products.')->group(function () {
+    Route::prefix('products')->name('products.')->middleware('role:Owner|Manager')->group(function () {
         Route::get('', [ProductController::class, 'index'])->name('index');
         Route::get('/list', [ProductController::class, 'getList'])->name('getList');
         Route::get('/see-detail', [ProductController::class, 'detail'])->name('detail');
@@ -103,7 +104,7 @@ Route::prefix('/')->name('admin.')->middleware(['auth', 'role:Admin|Manager|Sell
         Route::delete('/delete', [ProductController::class, 'delete'])->name('delete');
     });
 
-    Route::prefix('categories')->name('categories.')->group(function () {
+    Route::prefix('categories')->name('categories.')->middleware('role:Owner|Manager')->group(function () {
         Route::get('', [CategoryController::class, 'index'])->name('index');
         Route::get('/getList', [CategoryController::class, 'getList'])->name('getList');
         Route::get('/create', [CategoryController::class, 'create'])->name('create');
@@ -121,7 +122,7 @@ Route::prefix('/')->name('admin.')->middleware(['auth', 'role:Admin|Manager|Sell
             ->name('changePassword');
     });
 
-    Route::prefix('units')->name('units.')->group(function () {
+    Route::prefix('units')->name('units.')->middleware('role:Owner|Manager')->group(function () {
         Route::get('/', [UnitController::class, 'index'])->name('index');
         Route::get('/anyData', [UnitController::class, 'anyData'])->name('anyData');
         Route::get('/edit{id}', [UnitController::class, 'edit'])->name('edit');
@@ -131,7 +132,7 @@ Route::prefix('/')->name('admin.')->middleware(['auth', 'role:Admin|Manager|Sell
         Route::delete('/delete', [UnitController::class, 'destroy'])->name('delete');
     });
 
-    Route::prefix('brands')->name('brands.')->middleware('permission:Thương Hiệu|Mọi Quyền')->group(function () {
+    Route::prefix('brands')->name('brands.')->middleware('role:Owner|Manager')->group(function () {
         Route::get('', [BrandController::class, 'index'])->name('index');
         Route::get('/anyData', [BrandController::class, 'anyData'])->name('data');
         Route::get('/create', [BrandController::class, 'create'])->name('create');
@@ -147,7 +148,7 @@ Route::prefix('/')->name('admin.')->middleware(['auth', 'role:Admin|Manager|Sell
         Route::put('/edit', [QuotationController::class, 'update'])->name('edit.update');
     });
 
-    Route::prefix('purchases')->name('purchases.')->group(function(){
+    Route::prefix('purchases')->name('purchases.')->middleware('role:Owner|Manager')->group(function(){
         Route::get('/', [PurchaseController::class, 'index'])->name('index');
         Route::get('/list', [PurchaseController::class, 'getList'])->name('list');
         Route::get('/create-order', [PurchaseController::class, 'createOrder'])->name('createOrder');
@@ -163,7 +164,7 @@ Route::prefix('/')->name('admin.')->middleware(['auth', 'role:Admin|Manager|Sell
     });
 
     //Sale Invoices
-    Route::prefix('saleInvoices')->name('saleInvoices.')-> group(function(){
+    Route::prefix('saleInvoices')->name('saleInvoices.')->middleware('role:Owner|Manager|Seller')-> group(function(){
         Route::get('',[SaleInvoiceController::class, 'index'])->name('index');
         Route::get('/list', [SaleInvoiceController::class, 'getList'])->name('list');
         Route::get('/create',[SaleInvoiceController::class, 'create'])->name('create');
@@ -179,7 +180,7 @@ Route::prefix('/')->name('admin.')->middleware(['auth', 'role:Admin|Manager|Sell
 
     // tax
     // Route::resource('taxes', TaxController::class);
-    Route::prefix('taxes')->name('taxes.')-> group(function(){
+    Route::prefix('taxes')->name('taxes.')->middleware('role:Owner|Manager')-> group(function(){
         Route::get('',[TaxController::class, 'index'])->name('index');
         Route::get('/anyData',[TaxController::class, 'anyData'])->name('data');
         Route::get('/create',[TaxController::class, 'create'])->name('create');
@@ -199,6 +200,10 @@ Route::prefix('/')->name('admin.')->middleware(['auth', 'role:Admin|Manager|Sell
         Route::post('/edit/{id}', [DeliveryController::class, 'update'])->name('update');
         Route::delete('/delete', [DeliveryController::class, 'delete'])->name('delete');
         Route::post('/show-delivery-fee', [DeliveryController::class, 'showFee'])->name('showFee');
+    });
+
+    Route::prefix('statistic')->name('statistic.')->middleware('role:Owner|Manager')-> group(function(){
+        Route::get('',[StatisticController::class, 'index'])->name('index');
     });
 
 });

@@ -63,7 +63,7 @@ class RegisterController extends Controller
                    'email_verified_at' => Carbon::now(),
                 ]);
                 //Assign Role and Permission for new $user;
-                $user->assignRole('Người Dùng');
+                $user->assignRole('Seller');
                 $user->givePermissionTo('Không Quyền');
                 return redirect()->route('register')->with('success', 'Xác thực email thành công !');
             }

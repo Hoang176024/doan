@@ -1,5 +1,5 @@
 @extends('dashboard.layouts.app')
-@section('title', 'Purchase')
+@section('title', 'Import')
 @section('content')
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -8,12 +8,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Purchase manage</h1>
+                        <h1>Import manage</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a></li>
-                            <li class="breadcrumb-item active">Purchase</li>
+                            <li class="breadcrumb-item active">Import</li>
                         </ol>
                     </div>
                 </div>
@@ -27,7 +27,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Purchaswe list</h3>
+                                <h3 class="card-title">Import list</h3>
                                 <a href="{{route('admin.purchases.createOrder')}}"
                                    class="btn btn-primary fa-pull-right">Create</a>
                             </div>
@@ -37,12 +37,12 @@
                                     <thead>
                                     <tr>
                                         <th>Order</th>
-                                        <th>Purchase invoice code</th>
+                                        <th>Import invoice code</th>
                                         <th>Creator</th>
                                         <th>Role</th>
                                         <th>Total</th>
                                         <th>Payment type</th>
-                                        <th>Purchase date</th>
+                                        <th>Import date</th>
                                         <th>Description</th>
                                         <th>Action</th>
                                     </tr>
@@ -72,7 +72,7 @@
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Purchase detail</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Import detail</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

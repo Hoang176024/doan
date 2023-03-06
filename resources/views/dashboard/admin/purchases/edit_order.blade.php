@@ -1,5 +1,5 @@
 @extends('dashboard.layouts.app')
-@section('title', 'Edit purchase order')
+@section('title', 'Edit Import')
 @section('content')
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -8,12 +8,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Edit purchase order</h1>
+                        <h1>Edit Import</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a></li>
-                            <li class="breadcrumb-item"><a href="{{route('admin.purchases.index')}}">Purchase</a></li>
+                            <li class="breadcrumb-item"><a href="{{route('admin.purchases.index')}}">Import</a></li>
                             <li class="breadcrumb-item active">Edit</li>
                         </ol>
                     </div>
@@ -25,10 +25,10 @@
         <section class="content">
             <div class="container-fluid">
 
-                {{--Form create new order purchase--}}
+                {{--Form create new order Import--}}
                 <div class="card card-default">
                     <div class="card-header">
-                        <h3 class="card-title"><strong>Purchase Invoice code:</strong> {{$purchaseOrder->code}} </h3>
+                        <h3 class="card-title"><strong>Import Invoice code:</strong> {{$purchaseOrder->code}} </h3>
 
                         
                     </div>
@@ -42,7 +42,7 @@
                                         <tr>
                                             <th width="18%">Supplier  <span style="color: red">*</span></th>
                                             <th width="15%">Product  <span style="color: red">*</span></th>
-                                            <th>Purchase price</th>
+                                            <th>Import price</th>
                                             <th width="9%">Quantity  <span style="color: red">*</span></th>
                                             <th>Date of manufacture</th>
                                             <th>Expiry</th>

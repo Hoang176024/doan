@@ -22,45 +22,37 @@ class UserController extends Controller
     
     public function assignRole($userId)
     {
-        $user = User::with('roles', 'permissions')->find($userId);
+        $user = User::with('roles')->find($userId);
         $allRoles = Role::all();
         $userRole = $user->getRoleNames();
         $userRoleId = Role::where('name', $userRole)->pluck('id')->first();
         
-        $allPermissions = Permission::all();
-        $userPermissions = $user->getPermissionNames();
-        
         return view('dashboard.user.assign_role',
             compact(['user', $user], ['allRoles', $allRoles], ['userRole', $userRole],
-                ['userRoleId', $userRoleId], ['allPermissions', $allPermissions],
-                ['userPermissions', $userPermissions]));
+                ['userRoleId', $userRoleId]));
     }
     
     public function assignRoleProcess(Request $request, $userId)
     {
         $request->validate([
-            'permissions' => 'required',
+            'role' => 'required',
         ], [
-            'permissions.required' => 'Phải phân ít nhất 1 quyền cho người dùng',
+            'role.required' => 'Phải chọn ít nhất 1 vai trò cho người dùng',
         ]);
         
-        $user = User::with('roles', 'permissions')->find($userId);
+        $user = User::with('roles')->find($userId);
         
         //Remove old role and assign new role
         $newRole = Role::where('id', $request->role)->pluck('name')->first();
         $user->syncRoles($newRole);
         
-        //Remove old permissions and assign new permissions
-        $newPermissions = Permission::whereIn('id', $request->permissions)->pluck('name')->toArray();
-        $user->syncPermissions($newPermissions);
-        
         return redirect()->route('admin.users.index')->with('success',
-            'Phân Quyền mới cho ' . $user->full_name . ' thành công !');
+            'Phân Vai trò mới cho ' . $user->full_name . ' thành công !');
     }
     
     public function getList()
     {
-        $users = User::with('roles', 'permissions')->role(['Admin', 'Seller'])->orderBy('id',
+        $users = User::with('roles')->role(['Owner', 'Seller', 'Manager', 'None'])->orderBy('id',
             'DESC')->get()
             ->map(function ($user) {
                 $user->avatar_url = $user->avatar ? Storage::url($user->avatar) : asset('image/no_img.png');
@@ -69,9 +61,6 @@ class UserController extends Controller
         ->addColumn('role', function ($row) {
             return json_decode($row->getRoleNames());//getRolesNames() return Collection
         })->rawColumns(['role'])
-        ->addColumn('permissions', function ($row) {
-            return json_decode($row->getPermissionNames());//getPermissionNames() return Collection
-        })->rawColumns(['permissions'])
         ->addColumn('actions', function ($row) {
             return '<div class="btn-group">
                         <a href="' . route('admin.users.assignRole', $row->id) . '">
@@ -84,15 +73,13 @@ class UserController extends Controller
     
     public function delete(Request $request)
     {
-        $user = User::with('roles', 'permissions')->find($request->userId);
+        $user = User::with('roles')->find($request->userId);
         if ($user) {
             DB::beginTransaction();
             try {
-                //Remove role and permissions of user then delete user
+                //Remove role of user then delete user
                 $userRole = $user->getRoleNames()->first();
                 $user->removeRole($userRole);
-                $userPermissions = $user->getPermissionNames();
-                $user->revokePermissionTo($userPermissions->toArray());
                 $user->delete();
             } catch (\Throwable $e) {
                 DB::rollBack();

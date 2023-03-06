@@ -37,7 +37,6 @@
                                         <th>Email</th>
                                         <th>Birth day</th>
                                         <th>Role</th>
-                                        <th>Permission</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
@@ -154,7 +153,6 @@
                     {data: 'email', name: 'email'},
                     {data: 'birthday', name: 'birthday'},
                     {data: 'role', name: 'role'},
-                    {data: 'permissions', name: 'permissions'},
                     {data: 'actions', name: 'actions'},
                 ],
             }).buttons().container().appendTo('#table-users_wrapper .col-md-6:eq(0)');

@@ -67,21 +67,6 @@
                                                value="{{$user->address}}" readonly>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="permissions">Permissions  <span style="color: red">*</span></label>
-                                        <select multiple class="form-control select2 @error('permissions') is-invalid @enderror" id="permissions"
-                                                name="permissions[]" data-placeholder="Pick permissions">
-                                            @foreach($allPermissions as $permission)
-                                                <option value="{{$permission->id}}"
-                                                        @if(in_array($permission->name, $userPermissions->toArray())) selected @endif>
-                                                    {{$permission->name}}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        @error('permissions')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>

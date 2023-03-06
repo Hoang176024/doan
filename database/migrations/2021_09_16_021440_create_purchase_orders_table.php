@@ -19,8 +19,8 @@ class CreatePurchaseOrdersTable extends Migration
             $table->bigInteger('user_id');
             $table->decimal('total', 8, 0);
             $table->text('content')->nullable();
-            $table->tinyInteger('payment')->comment("1:Tiền Mặt, 2:Chuyển Khoản, 3:Thẻ");
-            $table->tinyInteger('status')->nullable();
+            $table->tinyInteger('payment')->comment("1:Cash, 2:Bank transfer, 3:Card");
+            $table->tinyInteger('status')->comment("1:Paid, 2:Unpaid");
             $table->timestamps();
         });
 

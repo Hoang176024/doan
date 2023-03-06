@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>TEAM 3 | ĐĂNG NHẬP</title>
+    <title>POS| LOGIN</title>
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -24,10 +24,10 @@
     <!-- /.login-logo -->
     <div class="card card-outline card-primary">
         <div class="card-header text-center">
-            <h2><b>POS - TEAM 3</b></h2>
+            <h2><b>POS - STORE</b></h2>
         </div>
         <div class="card-body">
-            <h3><p class="login-box-msg">ĐĂNG NHẬP</p></h3>
+            <h3><p class="login-box-msg">LOGIN</p></h3>
 
             <form action="{{route('login.process')}}" method="post">
                 @csrf
