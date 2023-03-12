@@ -48,6 +48,15 @@ class PurchaseController extends Controller
                     }
                 }
             })
+            ->addColumn('status', function ($row) {
+                if ($row->status == 1) {
+                    return '<span class="badge badge-success">Completed</span>';
+                    } else {
+                        if ($row->status == 2) {
+                            return '<span class="badge badge-danger">Pending</span>';
+                    }
+                }
+            })->rawColumns(['status'])
             ->addColumn('date', function ($row) {
                 return date('d-m-Y', strtotime($row->created_at));
             })->rawColumns(['date'])
@@ -58,7 +67,7 @@ class PurchaseController extends Controller
                         <button class="role_btn btn btn-warning" value="' . $row->id . '"><i class="fas fa-pencil-alt"></i></button></a>
                         <button class="delete_btn btn btn-danger" value="' . $row->id . '"><i class="fas fa-trash-alt"></i></button>
                     </div>';
-            })->rawColumns(['payment', 'actions'])->make(true);
+            })->rawColumns(['payment', 'actions','status'])->make(true);
     }
 
     public function createOrder()
@@ -85,6 +94,7 @@ class PurchaseController extends Controller
         $purchaseOrder->total = $request->total;
         $purchaseOrder->content = $request->description;
         $purchaseOrder->payment = $request->payment;
+        $purchaseOrder->status = $request->status;
         $purchaseOrder->save();
 
         //Delete all Purchaser order detail old
@@ -135,6 +145,7 @@ class PurchaseController extends Controller
         $dataPurchaseOrder['total'] = $request->total;
         $dataPurchaseOrder['content'] = $request->description;
         $dataPurchaseOrder['payment'] = $request->payment;
+        $dataPurchaseOrder['status'] = $request->status;
         $purchaseOrder = PurchaseOrder::create($dataPurchaseOrder);
 
         parse_str($_POST['form_data'], $data);//parse string of $_POST['form_data'] to $data
@@ -169,15 +180,25 @@ class PurchaseController extends Controller
             }
         }
 
+        if ($purchaseOrder->status == 1) {
+            $purchaseOrderStatus = "Completed";
+        } else {
+            if ($purchaseOrder->status == 2) {
+                $purchaseOrderStatus = "Pending";
+            }
+        }
+
         $output = '<div class="col-md-6">
-            <p><strong>Invoice code: </strong>' . $purchaseOrder->code . '</p>
+            <p><strong>Import code: </strong>' . $purchaseOrder->code . '</p>
             <p><strong>Creator: </strong>' . $purchaseOrder->users->full_name . '</p>
             <p><strong>Role: </strong>' . ($purchaseOrder->users->getRoleNames())[0] . '</p></div>
             <div class="col-md-6">
             <p><strong>Time: </strong>' . $purchaseOrder->updated_at->format('d/m/y') . '</p>
             <p><strong>Description: </strong>' . $purchaseOrder->content . '</p>
-            <p><strong>Payment type: </strong>' . $purchaseOrderPayment . '</p></div>';
-        $output .= '<table class="table table-bordered table-striped"><thead><tr><th>STT</th><th>Suppiler</th>
+            <p><strong>Payment type: </strong>' . $purchaseOrderPayment . '</p>
+            <p><strong>Status: </strong>' . $purchaseOrderStatus . '</p></div>';
+            
+        $output .= '<table class="table table-bordered table-striped"><thead><tr><th>Order</th><th>Suppiler</th>
             <th>Product</th><th>Purchase price</th><th>Quantity</th><th>Date of manufacture</th><th>Expiry</th><th>Total</th></tr></thead><tbody>';
         $count = 1;
         foreach ($purchaseOrder->purchase_order_details as $row) {
@@ -210,6 +231,14 @@ class PurchaseController extends Controller
             }
         }
 
+        if ($purchaseOrder->status == 1) {
+            $purchaseOrderStatus = "Completed";
+        } else {
+            if ($purchaseOrder->status == 2) {
+                $purchaseOrderStatus = "Pending";
+            }
+        }
+
         $output =
             '<style>
                 body{ font-family: "DejaVu Sans;",sans-serif;}
@@ -220,26 +249,27 @@ class PurchaseController extends Controller
                 .table_2{border: 1px solid black; margin-top: 20px;}
                 td.table_2, th.table_2, tr.table_2{border: 1px solid black;text-align: center;}
              </style>
-            <h3>Hóa Đơn Nhập Hàng</h3>
+            <h3>Import invoice</h3>
             <table class="table_1">
                 <tr>
-                    <td><strong>Mã Hóa Đơn: </strong>' . $purchaseOrder->code . '</td>
-                    <td><strong>Thời Gian: </strong>' . $purchaseOrder->updated_at->format('d/m/y') . '</td>
+                    <td><strong>Import code: </strong>' . $purchaseOrder->code . '</td>
+                    <td><strong>Time: </strong>' . $purchaseOrder->updated_at->format('d/m/y') . '</td>
                 </tr>
                 <tr >
-                    <td><strong>Người Nhập: </strong>' . $purchaseOrder->users->full_name . '</td>
-                    <td><strong>Thanh Toán: </strong>' . $purchaseOrderPayment . '</td>
+                    <td><strong>Creator: </strong>' . $purchaseOrder->users->full_name . '</td>
+                    <td><strong>Payment type: </strong>' . $purchaseOrderPayment . '</td>
+                    <td><strong>Status: </strong>' . $purchaseOrderStatus . '</td>
                 </tr>
                 <tr>
-                    <td><strong>Vai Trò: </strong>' . ($purchaseOrder->users->getRoleNames())[0] . '</td>
+                    <td><strong>Role: </strong>' . ($purchaseOrder->users->getRoleNames())[0] . '</td>
                 </tr>
             </table>
-            <p style="margin-left: 50px"><strong>Nội Dung: </strong>' . $purchaseOrder->content . '</p>
+            <p style="margin-left: 50px"><strong>Description: </strong>' . $purchaseOrder->content . '</p>
 
             <table class="table_2"><thead><tr>
-                <th class="table_2">STT</th><th class="table_2">Nhà Cung Cấp</th><th class="table_2">Sản Phẩm</th>
-                <th class="table_2">Giá Nhập</th><th class="table_2">Số Lượng</th>
-                <th class="table_2">Sản Xuất</th><th class="table_2">Hạn</th><th class="table_2">Thành Tiền</th>
+                <th class="table_2">Order</th><th class="table_2">Supplier</th><th class="table_2">Product</th>
+                <th class="table_2">Import price</th><th class="table_2">Quantity</th>
+                <th class="table_2">Datt of manufactor</th><th class="table_2">Expiry</th><th class="table_2">Total</th>
             </tr></thead><tbody>';
         $count = 1;
         foreach ($purchaseOrder->purchase_order_details as $row) {
@@ -256,7 +286,7 @@ class PurchaseController extends Controller
             $count++;
         }
         $output .=
-            '<tr><td class="table_2"><strong>Tổng Tiền</strong></td><td class="table_2" colspan="6"></td><td  class="table_2">' . $purchaseOrder->total . '</td></tr>';
+            '<tr><td class="table_2"><strong>Total</strong></td><td class="table_2" colspan="6"></td><td  class="table_2">' . $purchaseOrder->total . '</td></tr>';
 
         return $output;
     }
@@ -273,7 +303,7 @@ class PurchaseController extends Controller
         $path = $request->file('file')->getRealPath();
         Excel::import(new PurchaseOrderImports(), $path);
         return redirect()->route('admin.purchases.index')->with('succes',
-            'Thêm Đơn Nhập Hàng bằng File .csv thành công');
+            'Add import with.csv success');
     }
 
     public function delete(Request $request)

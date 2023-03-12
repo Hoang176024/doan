@@ -88,18 +88,6 @@
                     @enderror
                 </div>
             </div>
-
-            <div class="row mb-3">
-              <label for="customer_group_id" class="col-sm-2 col-form-label">Customer tier</label>
-              <div class="col-sm-10">
-                  <input type="text" class="form-control @error('customer_group_id') is-invalid @enderror"
-                  id="customer_group_id" name="customer_group_id" value="{{ old('customer_group_id',$customer->customer_group_id)}}">
-                  @error('customer_group_id')
-                      <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
-              </div>
-            </div>  
-
             <button type="submit" class="btn btn-primary">Save</button>
         </form>
     </main>

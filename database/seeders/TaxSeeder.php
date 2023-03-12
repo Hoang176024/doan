@@ -22,7 +22,7 @@ class TaxSeeder extends Seeder
         ]);
 
         Tax::create([
-            'name' => 'Giá đã bao gồm thuế',
+            'name' => 'Tax included',
             'rate' => '0'
         ]);
     }

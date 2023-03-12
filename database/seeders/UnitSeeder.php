@@ -17,74 +17,54 @@ class UnitSeeder extends Seeder
     public function run()
     {
         DB::table('units')->truncate();
-        Unit::create([
-            'unit_code' => 123,
-            'unit_name' => 'Chai',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
-        ]);
+Unit::create([
+    'unit_code' => 'BT',
+    'unit_name' => 'Bottle',
+]);
 
-        Unit::create([
-            'unit_code' => 103,
-            'unit_name' => 'Lon',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
-        ]);
+Unit::create([
+    'unit_code' => 'PK',
+    'unit_name' => 'Pack',
+]);
 
-        Unit::create([
-            'unit_code' => 193,
-            'unit_name' => 'Chiếc',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
-        ]);
+Unit::create([
+    'unit_code' => 'kg',
+    'unit_name' => 'Kilogram'
+]);
 
-        Unit::create([
-            'unit_code' => 789,
-            'unit_name' => 'Túi',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
-        ]);
+Unit::create([
+    'unit_code' => 'g',
+    'unit_name' => 'Gram'
+]);
 
-        Unit::create([
-            'unit_code' => 123,
-            'unit_name' => 'Hộp',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
-        ]);
+Unit::create([
+    'unit_code' => 'pcs',
+    'unit_name' => 'Pieces'
+]);
 
-        Unit::create([
-            'unit_code' => 123,
-            'unit_name' => 'Lọ',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
-        ]);
+Unit::create([
+    'unit_code' => 'ltr',
+    'unit_name' => 'Liter'
+]);
 
-        Unit::create([
-            'unit_code' => 123,
-            'unit_name' => 'KG',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
-        ]);
+Unit::create([
+    'unit_code' => 'ml',
+    'unit_name' => 'Milliliter'
+]);
 
-        Unit::create([
-            'unit_code' => 123,
-            'unit_name' => 'Thùng',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
-        ]);
+Unit::create([
+    'unit_code' => 'r',
+    'unit_name' => 'Ream'
+]);
 
-        Unit::create([
-            'unit_code' => 123,
-            'unit_name' => 'Gói',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
-        ]);
+Unit::create([
+    'unit_code' => 't',
+    'unit_name' => 'Tube'
+]);
 
-        Unit::create([
-            'unit_code' => 123,
-            'unit_name' => 'Lốc',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
-        ]);
+Unit::create([
+    'unit_code' => 'roll',
+    'unit_name' => 'Roll'
+]);
     }
 }

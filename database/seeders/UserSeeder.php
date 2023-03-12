@@ -18,16 +18,11 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $roleAdmin = Role::firstOrCreate(['name' => 'Quản Trị']);
-        $roleEditor = Role::firstOrCreate(['name' => 'Quản Lý']);
-        $roleSeller = Role::firstOrCreate(['name' => 'Nhân Viên']);
-        $roleUser = Role::firstOrCreate(['name' => 'Người Dùng']);
-        $permissionAll = Permission::firstOrCreate(['name' => 'Mọi Quyền']);
-        $permissionProduct = Permission::firstOrCreate(['name' => 'Sản Phẩm']);
-        $permissionPos = Permission::firstOrCreate(['name' => 'POS']);
-        $permissionBrand = Permission::firstOrCreate(['name' => 'Thương Hiệu']);
-        $permissionCategory = Permission::firstOrCreate(['name' => 'Danh Mục']);
-        $permissionNone = Permission::firstOrCreate(['name' => 'Không Quyền']);
+        $roleAdmin = Role::firstOrCreate(['name' => 'Owner']);
+        $roleEditor = Role::firstOrCreate(['name' => 'Manager']);
+        $roleSeller = Role::firstOrCreate(['name' => 'Seller']);
+        $roleUser = Role::firstOrCreate(['name' => 'None']);
+        $permissionNone = Permission::firstOrCreate(['name' => 'No permits']);
 
 
         DB::table('users')->truncate();
@@ -45,7 +40,7 @@ class UserSeeder extends Seeder
             'updated_at' => new \dateTime,
         ]);
         $admin->assignRole($roleAdmin);
-        $admin->givePermissionTo($permissionAll);
+        $admin->givePermissionTo($permissionNone);
 
         $editor = User::create([
             'full_name' => 'Nguyễn Văn B',
@@ -61,7 +56,7 @@ class UserSeeder extends Seeder
             'updated_at' => new \dateTime,
         ]);
         $editor->assignRole($roleEditor);
-        $editor->givePermissionTo('POS', 'Sản Phẩm', 'Thương Hiệu', 'Danh Mục');
+        $editor->givePermissionTo($permissionNone);
 
         $seller = User::create([
             'full_name' => 'Nguyễn Văn C',
@@ -77,7 +72,7 @@ class UserSeeder extends Seeder
             'updated_at' => new \dateTime,
         ]);
         $seller->assignRole($roleSeller);
-        $seller->givePermissionTo('POS', 'Sản Phẩm');
+        $seller->givePermissionTo($permissionNone);
 
         $user1 = User::create([
             'full_name' => 'Nguyễn Văn D',
@@ -94,22 +89,6 @@ class UserSeeder extends Seeder
         ]);
         $user1->assignRole($roleUser);
         $user1->givePermissionTo($permissionNone);
-
-        $user2 = User::create([
-            'full_name' => 'Nguyễn Mạnh Tâm',
-            'email' => 'posprojectcowellteam3@gmail.com',
-            'birthday' => '1999-01-01',
-            'address' => null,
-            'avatar' => null,
-            'phone' => null,
-            'password' => Hash::make('123456'),
-            'email_verification_code' => 'Ly3WfLol5KkYyHCtjQuy7CznS2gXeBI5bVJV1FH3',
-            'email_verified_at' => '2021-09-04 07:17:19',
-            'created_at' => '2021-09-04 07:16:44',
-            'updated_at' => '2021-09-04 07:17:19',
-        ]);
-        $user2->assignRole($roleUser);
-        $user2->givePermissionTo($permissionNone);
 
     }
 }

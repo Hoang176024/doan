@@ -54,10 +54,6 @@ class User extends Authenticatable
         return $this->hasMany(PurchaseOrder::class, 'user_id', 'id');
     }
 
-    public function sale_invoice(){
-        return $this->hasMany(SaleInvoice::class, 'user_id', 'id');
-    }
-
     public function pos_invoice(){
         return $this->hasMany(PosInvoice::class, 'user_id', 'id');
     }

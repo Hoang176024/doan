@@ -13,7 +13,7 @@ class ProfileController extends Controller
 {
     public function index()
     {
-        $user = User::with('roles', 'permissions')->where('email', Auth::user()->email)->first();
+        $user = User::with('roles')->where('email', Auth::user()->email)->first();
         $user->photo_url = $user->avatar ? Storage::url($user->avatar) : asset('image/no_img.png');
         return view('dashboard.profile.edit_profile')->with(compact('user', $user));
     }
@@ -32,7 +32,7 @@ class ProfileController extends Controller
             'avatar.mimes' => 'Avatar must be .jpg or .png'
         ]);
 
-        $user = User::with('roles', 'permissions')->find($userId);
+        $user = User::with('roles')->find($userId);
         $path = $this->_upload($request);
         if ($path) {
             $avatar = $path;
@@ -71,6 +71,7 @@ class ProfileController extends Controller
         if ($user) {
             if (Hash::check($request->old_password, $user->password)) {
                 $user->password = Hash::make($request->new_password);
+                $user->save();
                 return redirect()->back()->with('success', ('Change password success'));
             } else {
                 return redirect()->back()->with('error', ('Old password is incorect'));

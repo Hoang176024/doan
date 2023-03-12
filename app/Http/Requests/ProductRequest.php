@@ -45,25 +45,25 @@ class ProductRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => "Tên Sản Phẩm không được để trống",
-            'name.unique' => "Tên Sản Phẩm đã tồn tại trong",
-            'price_in.required'=> "Giá Nhập không được để trống",
-            'price_in.integer'=> "Giá Nhập là một số nguyên",
-            'price_in.min'=> "Giá Nhập nhỏ nhất là 2000",
-            'price_out.required'=> "Giá Bán được để trống",
-            'price_out.gt'=> "Giá Bán phải lớn hơn Giá Nhập",
-            'quantity.required' => "Số Lượng không được để trống",
-            'quantity.integer' => "Số Lượng phải là số nguyên",
-            'quantity.min' => "Số Lượng phải lớn hơn 20",
-            'photo.mimes' => "File ảnh phải có đuôi là .jpg, .svg, .bmp, png",
-            'category_id.required' => "Phải chọn Danh Mục",
-            'brand_id.required' => "Phải chọn Thương Hiệu",
-            'supplier_id.required'=>"Phải chọn Nhà Cung Cấp",
-            'unit_id.required'=>"Phải chọn Đơn Vị Tính",
-            'barcode.required'=>"Mã Vạch không được để trống",
-            'barcode_digits'=>"Mã Vạch chứa 13 ký tự số",
-            'mfg.before' => "Ngày Sản Xuất không được sau Hiện Tại",
-            'exp.after' =>"Hạn Sử Dụng không được trước Ngày Sản Xuất"
+            'name.required' => "Product Name cannot be blank",
+            'name.unique' => "The Product Name already exists",
+            'price_in.required'=> "Price Entry cannot be blank",
+            'price_in.integer'=> "Entry Price is an integer",
+            'price_in.min'=> "Minimum Entry Price is 2000",
+            'price_out.required'=> "Price cannot be blank",
+            'price_out.gt'=> "The Selling Price must be greater than the Entry Price",
+            'quantity.required' => "Quantity cannot be left blank",
+            'quantity.integer' => "Quantity must be an integer",
+            'quantity.min' => "Quantity must be more than 20",
+            'photo.mimes' => "Image files must have the extension .jpg, .svg, .bmp, png",
+            'category_id.required' => "Must choose Category",
+            'brand_id.required' => "Must choose Brand",
+            'supplier_id.required'=>"Must choose a Provider",
+            'unit_id.required'=>"Must select Unit of Calculation",
+            'barcode.required'=>"Barcode cannot be blank",
+            'barcode_digits'=>"Barcode contains 13 numeric characters",
+            'mfg.before' => "Manufacture Date cannot be after Current date",
+            'exp.after' =>"The Expiry Date cannot be before the Manufacture Date"
         ];
     }
 }

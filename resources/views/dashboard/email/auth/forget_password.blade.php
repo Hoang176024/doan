@@ -1,19 +1,19 @@
 @component('mail::message')
 
 
-Xin Chào {{$userFullName}} !
+Hello {{$userFullName}} !
 
 @component('mail::button', ['url' => route('resetPassword', $resetCode)])
-Nhấn vào nút này để khôi phục lại mật khẩu
+Click on this button to reset your password.
 @endcomponent
 
-<p>Hoặc click vào đường dẫn url dưới đây</p>
+<p>Or click on the URL below</p>
 <p>
     <a href="{{route('resetPassword', $resetCode)}}">
         {{route('resetPassword', $resetCode)}}
     </a>
 </p>
 
-Cảm ơn bạn <3<br>
+Thank you <3<br>
 {{ config('app.name') }}
 @endcomponent

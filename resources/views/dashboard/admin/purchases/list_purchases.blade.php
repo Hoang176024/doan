@@ -42,6 +42,7 @@
                                         <th>Role</th>
                                         <th>Total</th>
                                         <th>Payment type</th>
+                                        <th>Status</th>
                                         <th>Import date</th>
                                         <th>Description</th>
                                         <th>Action</th>
@@ -117,12 +118,12 @@
 
     <script type="text/javascript">
         @if(session('success'))
-        toastr.success('{{session("success")}}', 'Thành Công !', {timeOut: 5000});
+        toastr.success('{{session("success")}}', 'successful !', {timeOut: 5000});
         @php session()->forget('success'); @endphp
         @endif
 
         @if(session('error'))
-        toastr.error('{{session("error")}}', 'Thất Bại !', {timeOut: 5000});
+        toastr.error('{{session("error")}}', 'Failed !', {timeOut: 5000});
         @php session()->forget('error');@endphp
         @endif
     </script>
@@ -165,6 +166,7 @@
                     {data: 'role', name: 'role'},
                     {data: 'total', name: 'total'},
                     {data: 'payment', name: 'payment'},
+                    {data: 'status', name: 'status'},
                     {data: 'date', name: 'date'},
                     {data: 'content', name: 'content'},
                     {data: 'actions', name: 'actions'},
@@ -174,7 +176,7 @@
             $(document).on('click', '.btn_detail', function (e) {
                 $('#purchaseDetail').modal('show');
                 var purchaseOrderId = $(this).val();
-                var html ='<a href="https://pos_team3.example.com/purchases/print-pdf/'+purchaseOrderId+'" class="btn btn-success">PDF</a>';
+                var html ='<a href="http://127.0.0.1:8000/purchases/print-pdf/'+purchaseOrderId+'" class="btn btn-success">PDF</a>';
                 html += '<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>';
                 $('#modalFooter').html(html);
                 $.ajax({

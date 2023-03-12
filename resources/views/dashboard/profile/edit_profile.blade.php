@@ -102,17 +102,6 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
-
-                                    <div class="form-group">
-                                        <label for="permissions">Permissions</label>
-                                        <select multiple class="form-control select2" disabled id="permissions"
-                                                data-placeholder="Chọn Quyền Hạn">
-                                            @foreach($user->permissions as $key => $permissions)
-                                                <option selected>{{$permissions->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-
                                     @if($user->avatar==null)
                                         <img class="img-thumbnail" width="150px" alt="User Image"
                                              src="{{asset('image/avatar_icon.png')}}">
@@ -172,7 +161,7 @@
                                 @enderror
                             </div>
 
-                            <button type="submit" class="btn btn-primary">Chnage password</button>
+                            <button type="submit" class="btn btn-primary">Change password</button>
                         </form>
                     </div>
 
@@ -195,11 +184,11 @@
 
     <script type="text/javascript">
         @if(session('success'))
-        toastr.success('{{session("success")}}', 'Thành công !!!', {timeOut: 5000});
+        toastr.success('{{session("success")}}', 'Success !!!', {timeOut: 5000});
         @php session()->forget('success');@endphp
         @endif
         @if(session('error'))
-        toastr.error('{{session("error")}}', 'Thất bại !!!', {timeOut: 5000});
+        toastr.error('{{session("error")}}', 'Failed !!!', {timeOut: 5000});
         @php session()->forget('success');@endphp
         @endif
     </script>

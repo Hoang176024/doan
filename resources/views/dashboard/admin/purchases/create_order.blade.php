@@ -66,6 +66,16 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="status">Status  <span style="color: red">*</span></label>
+                                        <select name="status" id="status" class="form-control">
+                                            <option value="">-----Pick-----</option>
+                                            <option value="1">Completed</option>
+                                            <option value="2">Pending</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="col-md-2 offset-md-7">
                                     <div class="form-group">
                                         <label for="total">Total</label>
@@ -261,6 +271,11 @@
                         toastr.error('Payment type is null', 'Error !', {timeOut: 7000});
                         return false;
                     }
+                    if (($('#status').val() < 1) && ($('#total').val() != 0)) {
+                        has_error = true;
+                        toastr.error('Status is null', 'Error !', {timeOut: 7000});
+                        return false;
+                    }
                 }
                 if ((has_error == false)) {
                     var form_data = $(this).serialize();
@@ -268,6 +283,7 @@
                     var total = $('#total').val();
                     var description = $('#description').val();
                     var payment = $('#payment').val();
+                    var status = $('#status').val();
                     $.ajax({
                         url: "{{route('admin.purchases.store')}}",
                         method: "POST",
@@ -277,7 +293,8 @@
                             total: total,
                             description: description,
                             _token: _token,
-                            payment: payment
+                            payment: payment,
+                            status: status
                         },
                         success: function (data) {
                             if (data == 'Success') { }

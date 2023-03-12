@@ -23,9 +23,6 @@ class Customer extends Model
         return $record;
     }
 
-    public function sale_invoice(){
-        return $this->hasMany(SaleInvoice::class, 'customer_id', 'id');
-    }
 
     public function pos_invoice(){
         return $this->hasMany(PosInvoice::class, 'customer_id', 'id');

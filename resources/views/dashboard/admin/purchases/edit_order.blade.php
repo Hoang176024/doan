@@ -135,6 +135,16 @@
                                             </option>
                                         </select>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="status">Status<span style="color: red">*</span></label>
+                                        <select name="status" id="status" class="form-control">
+                                            <option value="">-----Pick-----</option>
+                                            <option value="1" @if($purchaseOrder->status == 1) selected @endif>Completed
+                                            </option>
+                                            <option value="2" @if($purchaseOrder->status == 2) selected @endif>Pending
+                                            </option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="col-md-2 offset-md-7">
                                     <div class="form-group">
@@ -188,14 +198,14 @@
                 var html = '';
                 html += '<tr>';
                 html += '<td><select name="item_supplier[]" class="form-control item_supplier" data-supplier_row="' + count + '">' +
-                    '<option value="">Chọn</option>'
+                    '<option value="">Pick</option>'
                 for (var i = 0; i < suppliers.length; i++) {
                     html += '<option value="' + suppliers[i].id + '">' + suppliers[i].name + '</option>';
                 }
                 html += '</select></td>';
 
                 html += '<td><select name="item_product[]" class="form-control item_product" data-product_row="' + count + '" id="item_product-' + count + '">' +
-                    '<option value="">Chọn</option></select></td>';
+                    '<option value="">Pick</option></select></td>';
                 html += '<td><input type="text" name="item_priceIn[]" class="form-control item_priceIn" id="item_priceIn-' + count + '" readonly></td>';
                 html += '<td><input type="text" name="item_quantity[]" class="form-control item_quantity" data-quantity_row="' + count + '" id="item_quantity-' + count + '"/></td>';
                 html += '<td><input type="text" name="item_mfg[]" class="form-control item_mfg" id="item_mfg-' + count + '"></td>';
@@ -332,6 +342,11 @@
                         toastr.error('Payment type is null', 'Error !', {timeOut: 7000});
                         return false;
                     }
+                    if (($('#status').val() < 1) && ($('#total').val() != 0)) {
+                        has_error = true;
+                        toastr.error('Status null', 'Error !', {timeOut: 7000});
+                        return false;
+                    }
                 }
                 if ((has_error == false)) {
                     var form_data = $(this).serialize();
@@ -339,6 +354,7 @@
                     var total = $('#total').val();
                     var description = $('#description').val();
                     var payment = $('#payment').val();
+                    var status = $('#status').val();
                     $.ajax({
                         url: "{{route('admin.purchases.updateOrder', $purchaseOrder->id)}}",
                         method: "POST",
@@ -348,7 +364,8 @@
                             total: total,
                             description: description,
                             _token: _token,
-                            payment: payment
+                            payment: payment,
+                            status: status
                         },
                         success: function (data) {
                             if (data == 'Success') {}

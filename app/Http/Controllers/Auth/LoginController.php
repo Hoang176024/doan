@@ -42,7 +42,7 @@ class LoginController extends Controller
                         if (auth()->attempt($request->only('email', 'password'))) {
                             $user = Auth::user();
                             return redirect()->intended(route('admin.dashboard'))->with('success',
-                                'Chào mừng quay trở lại ' . $user->full_name);     
+                                'Welcome back ' . $user->full_name);     
                         }                
                     } else {
                         return redirect()->back()->withInput()->with('error', 'Email have not been confirm');

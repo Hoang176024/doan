@@ -22,50 +22,32 @@ class RegisterController extends Controller
 
     public function process(RegisterRequest $request)
     {
-        $gRecaptcha = $request->grecaptcha;
+        $user = User::create([
+            'full_name' => $request->full_name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'email_verification_code' => Str::random(40),
+        ]);
 
-        $client = new Client();
-        $response = $client->post('https://www.google.com/recaptcha/api/siteverify',
-            [
-                'form_params' =>
-                    [
-                        'secret' => env('google_captcha_secrect'),
-                        'response' => $gRecaptcha
-                    ]
-            ]
-        );
-        $body = json_decode((string)$response->getBody());
-
-        if ($body->success == true) {
-            $user = User::create([
-                'full_name' => $request->full_name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'email_verification_code' => Str::random(40),
-            ]);
-
-            Mail::to($request->email)->send(new EmailVerificationMail($user));
-            return redirect()->intended(route('login'))->with('successfull', 'Check your mail to confirm email !');
-        }else{
-            return redirect()->back()->with('error', 'Google recaptcha không hợp lệ !');
-        }
+        Mail::to($request->email)->send(new EmailVerificationMail($user));
+        return redirect()->intended(route('login'))->with('successfull', 'Check your mail to confirm email !');
     }
 
     public function verifyEmail($verification_code){
         $user = User::where('email_verification_code', $verification_code)->first();
         if(!$user){
-            return redirect()->route('register')->with('error', 'Url xác thực không chính xác');
+            return redirect()->route('register')->with('error', 'Invalid verification URL');
         }else{
             if($user->email_verified_at){
-                return redirect()->route('register')->with('error', 'Email này chưa được xác thực');
+                return redirect()->route('register')->with('error', 'This email has not been verified');
             }else{
                 $user->update([
                    'email_verified_at' => Carbon::now(),
                 ]);
                 //Assign Role and Permission for new $user;
                 $user->assignRole('Seller');
-                $user->givePermissionTo('Không Quyền');
-                return redirect()->route('register')->with('success', 'Xác thực email thành công !');
+                $user->givePermissionTo('No permis');
+                return redirect()->route('register')->with('success', 'Email verification successful!');
             }
         }
     }

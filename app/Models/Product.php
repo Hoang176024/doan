@@ -54,11 +54,6 @@ class Product extends Model
         return $this->hasMany(PurchaseOrderDetail::class);
     }
 
-    public function sale_invoice_detail()
-    {
-        return $this->hasMany(SaleInvoiceDetail::class);
-    }
-
     public function pos_invoice_detail()
     {
         return $this->hasMany(SaleInvoiceDetail::class);

@@ -16,8 +16,16 @@ class BrandSeeder extends Seeder
     public function run()
     {
         DB::table('brands')->truncate();
-        Brand::factory()
-            ->count(10)
-            ->create();
+
+        $brands = [    ['name' => 'Nestlé'],
+            ['name' => 'Mars'],
+            ['name' => 'Hershey\'s'],
+            ['name' => 'Ferrero'],
+            ['name' => 'Mondelez'],
+        ];
+
+        foreach ($brands as $brand) {
+            Brand::create($brand);
+        }
     }
 }

@@ -19,7 +19,7 @@ class CreatePosInvoicesTable extends Migration
             $table->bigInteger('user_id');
             $table->bigInteger('customer_id');
             $table->text('note')->nullable();
-            $table->tinyInteger('payment')->comment('1:Tiền Mặt, 2:Chuyển Khoản, 3:Thẻ');
+            $table->tinyInteger('payment')->comment('1:Cash, 2:Bank transfer, 3:Card');
             $table->decimal('total_price_product', 10, 0);
             $table->bigInteger('tax_id');
             $table->decimal('tax_fee', 10, 0);

@@ -24,9 +24,9 @@ class ForgetPasswordController extends Controller
         $request->validate([
             'email' => 'required|email|exists:users'
         ], [
-            'email.required' => 'Email không được bỏ trống !',
-            'email.exists' => 'Email này không tồn tại trong cơ sở dữ liệu !',
-            'email.email' => 'Email phải có định dạng là Email !',
+            'email.required' => '"Email cannot be empty!',
+            'email.exists' => 'This email does not exist in the database. !',
+            'email.email' => 'Email must be in email format !',
         ]);
 
         $user = User::where('email', $request->email)->first();
@@ -37,7 +37,7 @@ class ForgetPasswordController extends Controller
         ]);
 
         Mail::to($user->email)->send(new ForgetPasswordMail($user->full_name, $passwordReset->reset_code));
-        return redirect()->back()->with('success', 'Vui lòng kiểm tra email để reset lại mật khẩu!');
+        return redirect()->route('login')->with('success', 'Please check your email to reset your password.!');
     }
 
     public function resetPassword($resetCode)
@@ -45,7 +45,7 @@ class ForgetPasswordController extends Controller
         $passwordResetData = PasswordReset::where('reset_code', $resetCode)->first();
         if (!$passwordResetData || Carbon::now()->subMinute(20) > $passwordResetData->created_at) {
             return redirect()->back()->route('forgetPassword')
-                ->with('error', 'Link reset đã hết hiệu lực !');
+                ->with('error', 'The reset link has expired !');
         }else{
            return view('dashboard.auth.reset_password', compact('resetCode'));
         }
@@ -59,22 +59,22 @@ class ForgetPasswordController extends Controller
             'password' => 'required|min:6',
             'confirm_password' => 'required|same:password',
         ],[
-            'email.required' => 'Email không được để trống !',
-            'email.email' => 'Email phải có định dạng Email !',
-            'password.required' => 'Password không được để trống !',
-            'password.min' => 'Password phải có ít nhất 6 ký tự',
-            'confirm_password.required' => 'Password xác nhận không được để trống',
-            'confirm_password.same' => 'Password xác thực phải giống password',
+            'email.required' => 'Email cannot be empty !',
+            'email.email' => 'Email must be in email format !',
+            'password.required' => 'Password cannot be empty !',
+            'password.min' => 'Password must be at least 6 characters',
+            'confirm_password.required' => 'Retype Password cannot be empty',
+            'confirm_password.same' => 'The retype-password must be the same as the password',
         ]);
 
         if (!$passwordResetData || Carbon::now()->subMinute(20) > $passwordResetData->created_at) {
             return redirect()->back()->route('forgetPassword')
-                ->with('error', 'Link reset passwork đã hết hiệu lực!');
+                ->with('error', 'Password reset link has expired!');
         }else{
             $user = User::find($passwordResetData->user_id);
             if($user->email!=$request->email){
                 return redirect()->back()
-                    ->with('error', 'Email nhập không đúng với email cần đổi mật khẩu!');
+                    ->with('error', 'The entered email does not match the email associated with the password change request!');
             }else{
                 $passwordResetData->delete();
                 $user->update([
@@ -82,7 +82,7 @@ class ForgetPasswordController extends Controller
                 ]);
 
                 return redirect()->route('login')
-                    ->with('success', 'Thay đổi mật khẩu mới thành công !');
+                    ->with('success', 'Successfully changed new password!');
             }
         }
     }

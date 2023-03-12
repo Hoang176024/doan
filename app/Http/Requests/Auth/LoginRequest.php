@@ -33,10 +33,9 @@ class LoginRequest extends FormRequest
     public function messages()
     {
         return [
-            'email.required' => "Email không được để trống",
-            'email.email' => "Email phải là 1 địa chỉ Email",
-            'password.required' => "Password không được để trống",
-            'grecaptcha.required' => "Phải nhập Google Recaptcha",
+            'email.required' => "Email cannot be empty",
+            'email.email' => "Email must be in email format",
+            'password.required' => "Password cannot be empty",
         ];
     }
 }

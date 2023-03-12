@@ -26,10 +26,10 @@ class CreateProductsTable extends Migration
             $table->text('description')->nullable();
             $table->tinyInteger('status')->comment('0: Stop selling, 1: Selling')->nullable();
             $table->unsignedBigInteger('sale')->nullable();
-            $table->bigInteger('category_id')->unsigned();
-            $table->bigInteger('brand_id')->unsigned();
-            $table->bigInteger('unit_id');
-            $table->bigInteger('supplier_id');
+            $table->bigInteger('category_id')->unsigned()->nullable();
+            $table->bigInteger('brand_id')->unsigned()->nullable();
+            $table->bigInteger('unit_id')->nullable();
+            $table->bigInteger('supplier_id')->nullable();
             $table->timestamps();
         });
     }

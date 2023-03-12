@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>TEAM 3 | ĐĂNG KÝ</title>
+    <title>Register</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -24,10 +24,10 @@
 <div class="register-box">
     <div class="card card-outline card-primary">
         <div class="card-header text-center">
-            <h2><b>POS - TEAM 3</b></h2>
+            <h2><b>POS</b></h2>
         </div>
         <div class="card-body">
-            <h3><p class="login-box-msg">ĐĂNG KÝ</p></h3>
+            <h3><p class="login-box-msg">REGISTER</p></h3>
 
             <form action="{{route('register.process')}}" method="post" id="form-register">
                 @csrf
@@ -79,37 +79,11 @@
                     <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
-                <div class="row">
-
-                    <div class="icheck-primary">
-                        <input type="checkbox" id="agreeTerms" class="form-control @error('terms') is-invalid @enderror"
-                               name="terms" value="agree">
-                        <label for="agreeTerms">
-                            Đồng ý với các <a href="#">Điều Khoản</a>
-                        </label>
-                        @error('terms')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                </div>
-
-                <div class="g-recaptcha" data-sitekey="{{env('GOOGLE_CAPTCHA_KEY')}}"
-                     data-callback="recaptchaDataCallBackRegister"
-                     data-expired-callback="recaptchaExpiredCallBackRegister"></div>
-                <input type="hidden" name="grecaptcha" id="hiddenRecaptchaRegister">
-
-                <div id="hiddenRecaptchaRegisterError" class="grecaptcha">
-                    @if($errors->any('grecaptcha'))
-                        <span class="text-danger">{{$errors->first('grecaptcha')}}</span>
-                    @endif
-                </div>
-
                 <br>
                 <div class="row">
                     <div class="mx-auto">
                         <button type="button" id="button-register" class="btn btn-md btn-primary btn-block">
-                            Đăng Ký
+                            Register
                         </button>
                     </div>
                 </div>
@@ -117,7 +91,7 @@
             <br>
 
 
-            <a href="{{route('login')}}" class="text-center">Đã có tài khoản --> Đăng nhập</a>
+            <a href="{{route('login')}}" class="text-center">Had an account --> Login</a>
         </div>
         <!-- /.form-box -->
     </div><!-- /.card -->
@@ -142,11 +116,11 @@
 <script type="text/javascript">
 
     @if(session('error'))
-    toastr.error('{{session("error")}}', 'Đăng nhập thất bại !!!', {timeOut: 5000});
+    toastr.error('{{session("error")}}', 'Register failed !!!', {timeOut: 5000});
     @endif
 
     @if(session('success'))
-    toastr.success('{{session("success")}}', 'Đăng ký tài khoản mới thành công !!!', {timeOut: 5000});
+    toastr.success('{{session("success")}}', 'Successfully registered a new account. !!!', {timeOut: 5000});
     @endif
 
     function recaptchaDataCallBackRegister(response) {

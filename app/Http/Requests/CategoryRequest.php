@@ -32,9 +32,9 @@ class CategoryRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => "Tên không được để trống",
-            'name.unique' => "Danh Mục với tên này đã tồn tại",
-            'parent_id.required' => "Phải chọn Danh Mục Cha cho Danh Mục này"
+            'name.required' => "Name cannot be blank",
+            'name.unique' => "Category with this name already exists",
+            'parent_id.required' => "Please select Parent Category for this Category"
         ];
     }
 }

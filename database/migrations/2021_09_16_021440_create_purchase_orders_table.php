@@ -20,14 +20,14 @@ class CreatePurchaseOrdersTable extends Migration
             $table->decimal('total', 8, 0);
             $table->text('content')->nullable();
             $table->tinyInteger('payment')->comment("1:Cash, 2:Bank transfer, 3:Card");
-            $table->tinyInteger('status')->comment("1:Paid, 2:Unpaid");
+            $table->tinyInteger('status')->comment("1:Completed, 2:Pending");
             $table->timestamps();
         });
 
         Schema::create('purchase_order_details', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('purchase_order_id');
-            $table->bigInteger('supplier_id');
+            $table->bigInteger('supplier_id')->nullable();
             $table->bigInteger('product_id');
             $table->decimal('price_in', 8, 0);
             $table->date('mfg')->nullable();

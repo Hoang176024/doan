@@ -16,122 +16,91 @@ class CategorySeeder extends Seeder
     public function run()
     {
         DB::table('categories')->truncate();
-        Category::create([
-            'name' => 'Bánh Kẹo',
+        $parent1 = Category::create([
+            'name' => 'Food and Beverage',
             'parent_id' => 0,
-            'description' => 'Bánh Kẹo',
+            'description' => 'All kinds of food and beverage products',
             'created_at' => new \dateTime,
             'updated_at' => new \dateTime,
         ]);
-
-        Category::create([
-            'name' => 'Nước Giải Khát',
+        
+        $parent2 = Category::create([
+            'name' => 'Household Items',
             'parent_id' => 0,
-            'description' => 'Nước Giải Khát',
+            'description' => 'Various household items and products',
             'created_at' => new \dateTime,
             'updated_at' => new \dateTime,
         ]);
-
+        
+        // Create child categories
         Category::create([
-            'name' => 'Nước Tăng Lực',
-            'parent_id' => 2,
-            'description' => 'Nước Tăng Lực',
+            'name' => 'Snacks',
+            'parent_id' => $parent1->id,
+            'description' => 'All kinds of snacks',
             'created_at' => new \dateTime,
             'updated_at' => new \dateTime,
         ]);
-
+        
         Category::create([
-            'name' => 'Nước Ngọt',
-            'parent_id' => 2,
-            'description' => 'Nước Ngọt',
+            'name' => 'Beverages',
+            'parent_id' => $parent1->id,
+            'description' => 'All kinds of beverages',
             'created_at' => new \dateTime,
             'updated_at' => new \dateTime,
         ]);
-
+        
         Category::create([
-            'name' => 'Bánh',
-            'parent_id' => 1,
-            'description' => 'Bánh',
+            'name' => 'Cleaning Supplies',
+            'parent_id' => $parent2->id,
+            'description' => 'Cleaning products and supplies',
             'created_at' => new \dateTime,
             'updated_at' => new \dateTime,
         ]);
-
+        
         Category::create([
-            'name' => 'Kẹo',
-            'parent_id' => 2,
-            'description' => 'Kẹo',
+            'name' => 'Kitchenware',
+            'parent_id' => $parent2->id,
+            'description' => 'Various kitchenware items and products',
             'created_at' => new \dateTime,
             'updated_at' => new \dateTime,
         ]);
-
+        
         Category::create([
-            'name' => 'Đồ Điện Tử',
-            'parent_id' => 0,
-            'description' => 'Đồ Điện Tử',
+            'name' => 'Personal Care',
+            'parent_id' => $parent2->id,
+            'description' => 'Personal care and grooming products',
             'created_at' => new \dateTime,
             'updated_at' => new \dateTime,
         ]);
-
+        
         Category::create([
-            'name' => 'Điện Thoại',
-            'parent_id' => 7,
-            'description' => 'Điện Thoại',
+            'name' => 'Frozen Foods',
+            'parent_id' => $parent1->id,
+            'description' => 'All kinds of frozen foods',
             'created_at' => new \dateTime,
             'updated_at' => new \dateTime,
         ]);
-
+        
         Category::create([
-            'name' => 'Máy Tính Bảng',
-            'parent_id' => 7,
-            'description' => 'Máy Tính Bảng',
+            'name' => 'Pet Supplies',
+            'parent_id' => $parent2->id,
+            'description' => 'Products for pets and pet owners',
             'created_at' => new \dateTime,
             'updated_at' => new \dateTime,
         ]);
-
+        
         Category::create([
-            'name' => 'Đồ Gia Dụng',
-            'parent_id' => 0,
-            'description' => 'Đồ Gia Dụng',
+            'name' => 'Stationery',
+            'parent_id' => $parent2->id,
+            'description' => 'Various stationery items and products',
             'created_at' => new \dateTime,
             'updated_at' => new \dateTime,
         ]);
-
+        
         Category::create([
-            'name' => 'Nồi Cơm',
-            'parent_id' => 10,
-            'description' => 'Nồi Cơm',
-            'created_at' => new \dateTime,
-            'updated_at' => new \dateTime,
-        ]);
-
-        Category::create([
-            'name' => 'Chảo Rán',
-            'parent_id' => 10,
-            'description' => 'Chảo Rán',
-            'created_at' => new \dateTime,
-            'updated_at' => new \dateTime,
-        ]);
-
-        Category::create([
-            'name' => 'Gia Vị',
-            'parent_id' => 0,
-            'description' => 'Gia Vị',
-            'created_at' => new \dateTime,
-            'updated_at' => new \dateTime,
-        ]);
-
-        Category::create([
-            'name' => 'Dầu Ăn',
-            'parent_id' => 13,
-            'description' => 'Dầu Ăn',
-            'created_at' => new \dateTime,
-            'updated_at' => new \dateTime,
-        ]);
-
-        Category::create([
-            'name' => 'Nước Chấm',
-            'parent_id' => 13,
-            'description' => 'Nước Chấm',
+            'name' => 'Toys and Games',
+            'parent_id' => $parent2->id,
+            'description' => 'Toys and games for all ages',
             'created_at' => new \dateTime,
             'updated_at' => new \dateTime,
         ]);

@@ -18,27 +18,27 @@ class StatisticController extends Controller
         $startDate = Carbon::now()->subDays($daysAgo);
         $endDate = Carbon::now();
 
-        $query = PosInvoice::selectRaw('SUM(total_last) as total_sales, COUNT(*) as number_of_sales, DATE(created_at) as date')
+        $query = PosInvoice::selectRaw('SUM(total_last) as total_sales, COUNT(*) as number_of_sales')
+            ->when($interval === 'daily', function ($query) {
+                return $query->selectRaw('DATE(created_at) as date')
+                             ->groupBy('date');
+            })
+            ->when($interval === 'weekly', function ($query) {
+                return $query->selectRaw('YEARWEEK(created_at) as week')
+                             ->groupBy('week');
+            })
+            ->when($interval === 'monthly', function ($query) {
+                return $query->selectRaw('DATE_FORMAT(created_at, "%Y-%m") as month')
+                             ->groupBy('month');
+            })
             ->whereBetween('created_at', [$startDate, $endDate]);
 
-        switch ($interval) {
-            case 'daily':
-                $query->groupBy('date');
-                $chartLabelFormat = 'Y-m-d';
-                break;
-            case 'weekly':
-                $query->groupByRaw('YEARWEEK(created_at)');
-                $chartLabelFormat = 'Y-\WW';
-                break;
-            case 'monthly':
-                $query->groupByRaw('DATE_FORMAT(created_at, "%Y-%m")');
-                $chartLabelFormat = 'Y-m';
-                break;
-            default:
-                $query->groupBy('date');
-                $chartLabelFormat = 'Y-m-d';
-                break;
-        }
+        $chartLabelFormat = match ($interval) {
+            'daily' => 'Y-m-d',
+            'weekly' => 'Y-\WW',
+            'monthly' => 'F Y',
+            default => 'Y-m-d',
+        };
 
         $statistics = $query->get();
         $totalSales = $statistics->sum('total_sales');

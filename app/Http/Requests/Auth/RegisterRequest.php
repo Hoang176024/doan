@@ -28,23 +28,19 @@ class RegisterRequest extends FormRequest
             'email' => 'required|unique:users,email',
             'password' => 'required|min:6',
             'retype_password' => 'required|same:password',
-            'terms' => 'required',
-            'grecaptcha' => 'required',
         ];
     }
 
     public function messages()
     {
         return [
-            'full_name.required' => 'Full Name không được để trống',
-            'email.required' => 'Email không được để trống',
-            'email.unique' => 'Email này đã tồn tại',
-            'password.required' => 'Password không được để trống',
-            'password.min' => 'Password phải có ít nhất 6 ký tự',
-            'retype_password.required' => 'Retype Password không được để trống',
-            'retype_password.same' => 'Retype Password phải giống password',
-            'terms.required' => 'Phải đồng ý với các điều khoản của chúng tôi',
-            'grecaptcha.required' => 'Phải nhập Google Recaptcha',
+            'full_name.required' => 'Full Name cannot be empty',
+            'email.required' => 'Email cannot be empty',
+            'email.unique' => 'This email already exists',
+            'password.required' => 'Password cannot be empty',
+            'password.min' => 'Password must be at least 6 characters',
+            'retype_password.required' => 'Retype Password cannot be empty',
+            'retype_password.same' => 'Retype Password must be same as password',
         ];
     }
 }
