@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class PosInvoiceDetailSeeder extends Seeder
 {
@@ -22,6 +23,10 @@ class PosInvoiceDetailSeeder extends Seeder
             // Generate random number of details for each invoice
             $numDetails = rand(1, 5);
             for ($i = 0; $i < $numDetails; $i++) {
+                $startDate = '2023-01-01';
+                $endDate = '2023-3-13';
+                $randomTimestamp = rand(strtotime($startDate), strtotime($endDate));
+                $randomDate = date('Y-m-d H:i:s', $randomTimestamp);
                 // Get a random product
                 $product = DB::table('products')->inRandomOrder()->first();
 
@@ -39,8 +44,8 @@ class PosInvoiceDetailSeeder extends Seeder
                     'buying_quantity' => $quantity,
                     'discount' => $discount,
                     'sub_total' => $subTotal,
-                    'created_at' => new \dateTime,
-                    'updated_at' => new \dateTime,
+                    'created_at' => $randomDate,
+                    'updated_at' => $randomDate,
                 ]);
             }
         }

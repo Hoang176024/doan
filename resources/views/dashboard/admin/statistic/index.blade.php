@@ -71,8 +71,8 @@
     <div class="col-md-4">
     <div class="card">
   <div class="card-body">
-    <h5 class="card-title">Total Sales</h5>
-    <p class="card-text big-number"><i class="fas fa-dollar-sign"></i> {{ $totalSales }}</p>
+    <h5 class="card-title"><i class="fas fa-dollar-sign"></i>Total Sales</h5>
+    <p class="card-text big-number"> {{ $totalSales }} VND</p>
   </div>
 </div>
     </div>
@@ -88,7 +88,7 @@
       <div class="card">
         <div class="card-body">
           <h5 class="card-title"><i class="fas fa-chart-line"></i> Average Sales</h5>
-          <p class="card-text big-number">{{ $averageSales }}</p>
+          <p class="card-text big-number">{{ $averageSales }} VND</p>
         </div>
       </div>
     </div>
@@ -154,9 +154,9 @@
                         beginAtZero: true,
                         callback: function(value, index, values) {
                             if(parseInt(value) >= 1000){
-                                return '$' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                return  value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                             } else {
-                                return '$' + value;
+                                return value;
                             }
                         }
                     }

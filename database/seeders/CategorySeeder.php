@@ -104,5 +104,7 @@ class CategorySeeder extends Seeder
             'created_at' => new \dateTime,
             'updated_at' => new \dateTime,
         ]);
+
+        
     }
 }
