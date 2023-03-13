@@ -127,7 +127,7 @@
                     </a>
                 </li>
                 @endrole
-                @role('Owner|Manager')
+                @role('Owner')
                 <li class="nav-item">
                     <a href="{{route('admin.users.index')}}" class="nav-link">
                         <i class="fas fa-users-cog"></i>
@@ -154,15 +154,7 @@
                             <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
-<!--
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item" style="margin-left: 4px">
-                            <a href="{{route('admin.deliveries.index')}}" class="nav-link">
-                                <i class="fas fa-arrow-right" style="margin-left: 10px"></i>
-                                <p>Deliverie</p>
-                            </a>
-                        </li>
--->
+
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{route('admin.taxes.index')}}" class="nav-link">

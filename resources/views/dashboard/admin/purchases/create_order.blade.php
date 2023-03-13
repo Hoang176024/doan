@@ -128,14 +128,14 @@
                 var html = '';
                 html += '<tr>';
                 html += '<td><select name="item_supplier[]" class="form-control item_supplier" data-supplier_row="' + count + '">' +
-                    '<option value="">Chọn</option>'
+                    '<option value="">Pick</option>'
                 for (var i = 0; i < suppliers.length; i++) {
                     html += '<option value="' + suppliers[i].id + '">' + suppliers[i].name + '</option>';
                 }
                 html += '</select></td>';
 
                 html += '<td><select name="item_product[]" class="form-control item_product" data-product_row="' + count + '" id="item_product-' + count + '">' +
-                    '<option value="">Chọn</option></select></td>';
+                    '<option value="">Pick</option></select></td>';
                 html += '<td><input type="text" name="item_priceIn[]" class="form-control item_priceIn" id="item_priceIn-' + count + '" readonly></td>';
                 html += '<td><input type="text" name="item_quantity[]" class="form-control item_quantity" data-quantity_row="' + count + '" id="item_quantity-' + count + '" /></td>';
                 html += '<td><input type="text" name="item_mfg[]" class="form-control item_mfg" id="item_mfg-' + count + '"></td>';
